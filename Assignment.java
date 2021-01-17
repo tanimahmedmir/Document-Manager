@@ -1,8 +1,6 @@
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
+import java.awt.event.*;
 
 public class Assignment extends JFrame{
 
@@ -15,23 +13,19 @@ public class Assignment extends JFrame{
     private String[] currencyName = {"Choose Currency","RUPEE", "USD", "EURO", "CANADIAN DOLLAR", "AUSTRILIAN DOLLAR"};
     private double input;
     private String currency;
+    private double output;
+    private String answer;
 
     Assignment() {
-        initComponents();
-    }
-
-    public void initComponents() {
-
         container = this.getContentPane();
         container.setLayout(null);
         container.setBackground(Color.gray);
 
-        font = new Font("Source Code Pro",Font.BOLD,18);
+        font = new Font("JetBrains Mono",Font.BOLD,18);
 
         label1 = new JLabel("Enter Amount (In Taka)");
         label1.setBounds(50, 40, 250, 50);
         label1.setFont(font);
-
 
         textF1 = new JTextField();
         textF1.setBounds(320, 52, 450, 30);
@@ -84,52 +78,47 @@ public class Assignment extends JFrame{
         @Override
         public void actionPerformed(ActionEvent event) {
             if (event.getSource() == textF1) {
+                try {
                     input = Double.parseDouble(textF1.getText());
-
+                } catch (NumberFormatException e1) {
+                    JOptionPane.showMessageDialog(container,"Please Input valid value");
+                }
             }
             else if (event.getSource() == cbox) {
                 currency = cbox.getSelectedItem().toString();
             }
             else if (event.getSource() == button2) {
-
-                if (currency.equals("RUPEE"))
-                {
-                    double ans = input / 1.5;
-                    String answer = Double.toString(ans);
-                    textF2.setText(answer);
+                try {
+                    if (currency.equals("RUPEE")) {
+                        output = input / 1.5;
+                        answer = Double.toString(output);
+                        textF2.setText(answer);
+                    } else if (currency.equals("USD")) {
+                        output = input / 85;
+                        answer = Double.toString(output);
+                        textF2.setText(answer);
+                    } else if (currency.equals("EURO")) {
+                        output = input / 104;
+                        answer = Double.toString(output);
+                        textF2.setText(answer);
+                    } else if (currency.equals("CANADIAN DOLLAR")) {
+                        output = input / 67;
+                        answer = Double.toString(output);
+                        textF2.setText(answer);
+                    } else if (currency.equals("AUSTRILIAN DOLLAR")) {
+                        output = input / 65;
+                        answer = Double.toString(output);
+                        textF2.setText(answer);
+                    }
+                } catch (NullPointerException e2) {
+                    JOptionPane.showMessageDialog(container,"Please Choose a currency");
                 }
-                else if (currency.equals("USD"))
-                {
-                    double ans1 = input / 85;
-                    String answer1 = Double.toString(ans1);
-                    textF2.setText(answer1);
-                }
-                else if (currency.equals("EURO"))
-                {
-                    double ans2 = input / 104;
-                    String answer2 = Double.toString(ans2);
-                    textF2.setText(answer2);
-                }
-                else if (currency.equals("CANADIAN DOLLAR"))
-                {
-                    double ans3 = input / 67;
-                    String answer3 = Double.toString(ans3);
-                    textF2.setText(answer3);
-                }
-                else if (currency.equals("AUSTRILIAN DOLLAR"))
-                {
-                    double ans4 = input / 65;
-                    String answer4 = Double.toString(ans4);
-                    textF2.setText(answer4);
-                }
-
             }
             else if (event.getSource() == button1) {
                 textF1.setText(null);
                 cbox.setSelectedIndex(0);
                 textF2.setText(null);
             }
-
         }
     }
 
@@ -142,4 +131,3 @@ public class Assignment extends JFrame{
         frame.setSize(800, 600);
     }
 }
-
