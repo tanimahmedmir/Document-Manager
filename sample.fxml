@@ -1,46 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
 
 <BorderPane prefHeight="800.0" prefWidth="800.0"
-            xmlns="http://javafx.com/javafx/11.0.10-internal"
+            xmlns="http://javafx.com/javafx/8.0.171"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="sample.Controller">
-   <top>
-      <MenuBar BorderPane.alignment="CENTER">
-          <Menu text="File">
-              <MenuItem text="New" />
-              <MenuItem text="Open" onAction="#onOpen" />
-              <MenuItem text="Save" onAction="#onSave" />
-              <MenuItem text="Save As" onAction="#onSaveAs" />
-              <MenuItem text="Exit" onAction="#onExit" />
-          </Menu>
-          <Menu text="Edit">
-              <MenuItem text="Undo" />
-              <MenuItem text="Redo" />
-              <MenuItem text="Cut" onAction="#onCut"/>
-              <MenuItem text="Copy" onAction="#onCopy"/>
-              <MenuItem text="Paste" />
-              <MenuItem text="Delete" />
-              <MenuItem text="Find" />
-              <MenuItem text="Select All" onAction="#onSelect" />
-          </Menu>
-          <Menu text="Preferance">
-                  <MenuItem text = "Settings" />
-          </Menu>
-          <Menu text="Help">
-              <MenuItem text="About" />
-          </Menu>
-      </MenuBar>
-   </top>
-
-   <bottom>
-      <HBox prefHeight="22.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
-   </bottom>
-
-   <center>
-      <TextArea fx:id="areaText" prefHeight="346.0" prefWidth="583.0" BorderPane.alignment="CENTER" />
-   </center>
-
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <Menu text="File">
+                <MenuItem text="New" />
+                <MenuItem text="Open" onAction="#onOpen" />
+                <MenuItem text="Save" onAction="#onSave" />
+                <MenuItem text="Save As" onAction="#onSaveAs" />
+                <MenuItem text="Exit" onAction="#onExit" />
+            </Menu>
+            <Menu text="Edit">
+                <MenuItem text="Undo" />
+                <MenuItem text="Redo" />
+                <MenuItem text="Cut" onAction="#onCut"/>
+                <MenuItem text="Copy" onAction="#onCopy"/>
+                <MenuItem text="Paste" onAction="#onPaste"/>
+                <MenuItem text="Delete" onAction="#onDelete"/>
+                <MenuItem text="Find" />
+                <MenuItem text="Select All" onAction="#onSelectAll" />
+            </Menu>
+            <Menu text="Preference">
+                <MenuItem text = "Settings" />
+            </Menu>
+            <Menu text="Help">
+                <MenuItem text="About" />
+            </Menu>
+        </MenuBar>
+    </top>
+    <left>
+        <TabPane prefHeight="770.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <Tab text="Untitled">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="320.0" prefWidth="780.0">
+                    <HBox layoutY="710.0" prefHeight="28.0" prefWidth="800.0" />
+                    <TextArea fx:id="areaText" prefHeight="703.0" prefWidth="800.0" />
+                    <ScrollBar layoutX="782.0" orientation="VERTICAL" prefHeight="684.0" prefWidth="19.0" />
+                    <ScrollBar layoutX="-3.0" layoutY="684.0" prefHeight="19.0" prefWidth="806.0" />
+                </AnchorPane>
+            </Tab>
+        </TabPane>
+    </left>
 </BorderPane>

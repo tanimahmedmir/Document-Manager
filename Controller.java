@@ -2,7 +2,6 @@ package sample;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
@@ -10,8 +9,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class Controller {
 
@@ -19,23 +16,14 @@ public class Controller {
     @FXML
     private TextArea areaText;
     private Stage stage;
+    public String path;
 
     public void init(Stage stage) {
         this.stage = stage;
     }
 
-    //
-
-
-    /*public void initialize(URL location, ResourceBundle resources)
-    {
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        fileChooser.getExtensionFilters().addAll(
-                        new FileChooser.ExtensionFilter("Text", "*.txt"),
-                        new FileChooser.ExtensionFilter("All Files", "*.*"));
-    }*/
     @FXML
-    private void onOpen() throws IOException {
+    public void onOpen() throws IOException {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -44,7 +32,9 @@ public class Controller {
                 new FileChooser.ExtensionFilter("Text", "*.txt"));
 
         File file = fileChooser.showOpenDialog(null);
+
         FileReader fileReader = new FileReader(file.getAbsolutePath());
+        path = file.getAbsolutePath();
         BufferedReader bufferedReader = new BufferedReader(fileReader);
 
         StringBuilder stringBuilder = new StringBuilder();
@@ -58,22 +48,12 @@ public class Controller {
     }
 
     @FXML
-    private void onSave() throws IOException {
-        FileChooser saveChooser = new FileChooser();
-        File saveFile = saveChooser.showSaveDialog(stage);
-        if (saveFile != null) {
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(saveFile));
-            try {
-                bufferedWriter.write(areaText.getText());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                bufferedWriter.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+    public void onSave() throws IOException {
+        File file = new File(path);
+        PrintWriter savedText = new PrintWriter(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(savedText);
+        bufferedWriter.write(areaText.getText());
+        bufferedWriter.close();
     }
 
 
@@ -99,7 +79,21 @@ public class Controller {
     }
 
     @FXML
+    public void onSelectAll() {
+        areaText.selectAll();
+    }
+
+    @FXML
     public void onCut() {
+        String text = areaText.getSelectedText();
+
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+
+        content.putString(text);
+        clipboard.setContent(content);
+
+        areaText.setText(areaText.getText().replace(areaText.getSelectedText(),""));
 
     }
 
@@ -115,8 +109,16 @@ public class Controller {
     }
 
     @FXML
-    public void onSelect() {
-        
+    public void onPaste() {
+        Clipboard systemClipboard = Clipboard.getSystemClipboard();
+        String text = systemClipboard.getString();
+        int caretPosition = areaText.getCaretPosition();
+        areaText.insertText(caretPosition, text);
+    }
+
+    @FXML
+    public void onDelete() {
+        areaText.setText(areaText.getText().replace(areaText.getSelectedText(),""));
     }
 
     @FXML
